@@ -1,0 +1,22 @@
+package Math;
+
+public class q4 {
+	public static double q4b (int n) {
+		int time = 150;
+		
+		for (int i = 1; i <= n; i++) {
+			time = time + 10;
+			for (int k = 5; k <= i+2; k++) {
+				time = time + 6 * k;
+			}
+		}
+		
+		return time;
+	}
+	
+	public static void main(String[] args) {
+		int number = 5;
+		
+		System.out.println(q4b(number));
+	}
+}
