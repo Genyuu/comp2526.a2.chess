@@ -1,0 +1,35 @@
+package Pieces;
+
+import javax.swing.ImageIcon;
+import java.lang.Math;
+
+/**
+ * Bishop chess piece.
+ * 
+ * @author Chris Cho, A00972501, Set A
+ * @version 1.0
+ */
+public class Bishop extends Piece{
+    /**
+     * Bishop constructor.
+     * @param p the owner of this piece
+     */
+    public Bishop(int p) {
+        super(p);
+        if (p == 1) {
+            pieceIcon = new ImageIcon("icons\\wBishop.png");
+        } else {
+            pieceIcon = new ImageIcon("icons\\bBishop.png");
+        }
+    }
+
+    /** 
+     * Evaluates the validity of the move based on the knight pieces movement rules.
+     * The movement is only valid when the move distance of x and y are both the same.
+     * Direction is irrelevant, only magnitude is considered.
+     */
+    public boolean validMove(int x, int y, int destX, int destY) {
+        return ((Math.pow((destX - x),2)) == (Math.pow((destY - y), 2)));
+    }
+
+}
