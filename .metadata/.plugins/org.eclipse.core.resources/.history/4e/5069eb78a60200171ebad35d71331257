@@ -49,10 +49,6 @@ public class Engine extends JPanel {
         board.setBoard();
     }
     
-    private void addMenu() {
-    	
-    }
-    
     /**
      * Manages the menu button events.
      * @author Chris Cho, A00972501, Set A

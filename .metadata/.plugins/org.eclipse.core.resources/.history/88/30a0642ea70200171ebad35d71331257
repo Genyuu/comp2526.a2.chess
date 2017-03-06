@@ -159,11 +159,6 @@ public class Board extends JPanel{
         return (!(tile[point.y][point.x].isEmpty()));
     }
     
-    private final boolean hasSamePlayer() {
-    	return (tile[point.y][point.x].getPiece().getPlayer() ==
-    			tile[pointActivated.y][pointActivated.x].getPiece().getPlayer());
-    }
-    
     private final Boolean checkTurn() {
     	return (tile[point.y][point.x].piece.getPlayer() == turn);
     }
@@ -201,12 +196,8 @@ public class Board extends JPanel{
      * @return true if valid; false otherwise.
      */
     private boolean scan() {
-        if (hasPiece() && hasSamePlayer()) {
-        	return false;
-        } else {
-            return tile[pointActivated.y][pointActivated.x]
-                   .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y);
-        }
+        return (tile[pointActivated.y][pointActivated.x]
+                .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y));
     }
     
     /**
@@ -239,14 +230,12 @@ public class Board extends JPanel{
                 if (hasPiece()) {
                     if (checkTurn()) {
                     	activate();
+                    	changeTurn();
                     }
                 }
             } else {
                 if (scan()) {
-                    if (!hasPiece() || !hasSamePlayer()) {
-                    	move();
-                    	changeTurn();
-                    }
+                    move();
                 }
                 deactivate();
             }

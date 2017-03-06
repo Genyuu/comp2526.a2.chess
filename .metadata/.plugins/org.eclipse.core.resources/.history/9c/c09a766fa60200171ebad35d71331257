@@ -28,9 +28,6 @@ public class Board extends JPanel{
     // Amount of tiles on the board grid.
     private int gridSize;
     
-    // Player play turn.
-    private int turn;
-    
     // Dimension of the tile.
     private Dimension size;
     
@@ -92,7 +89,6 @@ public class Board extends JPanel{
      * Sets-up the pieces with the default chess game set-up.
      */
     public void setBoard() { 
-    	turn = 1;
         for (int x = 0; x < 8; x++) {
             tile[1][x].setPiece(new Pawn(2));
             tile[6][x].setPiece(new Pawn(1));
@@ -159,23 +155,6 @@ public class Board extends JPanel{
         return (!(tile[point.y][point.x].isEmpty()));
     }
     
-    private final boolean hasSamePlayer() {
-    	return (tile[point.y][point.x].getPiece().getPlayer() ==
-    			tile[pointActivated.y][pointActivated.x].getPiece().getPlayer());
-    }
-    
-    private final Boolean checkTurn() {
-    	return (tile[point.y][point.x].piece.getPlayer() == turn);
-    }
-    
-    private final void changeTurn() {
-    	if (turn == 1) {
-    		turn = 2;
-    	} else {
-    		turn = 1;
-    	}
-    }
-    
     // Activates the clicked tile.
     private final void activate() {
         pointActivated = point;
@@ -201,12 +180,8 @@ public class Board extends JPanel{
      * @return true if valid; false otherwise.
      */
     private boolean scan() {
-        if (hasPiece() && hasSamePlayer()) {
-        	return false;
-        } else {
-            return tile[pointActivated.y][pointActivated.x]
-                   .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y);
-        }
+        return (tile[pointActivated.y][pointActivated.x]
+                .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y));
     }
     
     /**
@@ -237,16 +212,11 @@ public class Board extends JPanel{
             
             if (isDeactive()) {
                 if (hasPiece()) {
-                    if (checkTurn()) {
-                    	activate();
-                    }
+                    activate();
                 }
             } else {
                 if (scan()) {
-                    if (!hasPiece() || !hasSamePlayer()) {
-                    	move();
-                    	changeTurn();
-                    }
+                    move();
                 }
                 deactivate();
             }

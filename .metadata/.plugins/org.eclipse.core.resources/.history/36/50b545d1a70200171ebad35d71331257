@@ -201,12 +201,9 @@ public class Board extends JPanel{
      * @return true if valid; false otherwise.
      */
     private boolean scan() {
-        if (hasPiece() && hasSamePlayer()) {
-        	return false;
-        } else {
-            return tile[pointActivated.y][pointActivated.x]
-                   .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y);
-        }
+        return (tile[pointActivated.y][pointActivated.x]
+                .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y)
+                && !hasSamePlayer());
     }
     
     /**
@@ -243,10 +240,8 @@ public class Board extends JPanel{
                 }
             } else {
                 if (scan()) {
-                    if (!hasPiece() || !hasSamePlayer()) {
-                    	move();
-                    	changeTurn();
-                    }
+                    move();
+                    changeTurn();
                 }
                 deactivate();
             }

@@ -205,7 +205,7 @@ public class Board extends JPanel{
         	return false;
         } else {
             return tile[pointActivated.y][pointActivated.x]
-                   .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y);
+                   .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y));
         }
     }
     
