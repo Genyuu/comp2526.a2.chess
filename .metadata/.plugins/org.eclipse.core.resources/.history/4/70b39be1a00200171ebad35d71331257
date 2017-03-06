@@ -20,7 +20,6 @@ import Pieces.*;
  * @author Chris Cho, A00972501, Set A
  * @version 3.0
  */
-
 public class Board extends JPanel{
     // Dimension size of each tile.
     private int maxSize;

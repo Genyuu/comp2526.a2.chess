@@ -24,7 +24,7 @@ public class King extends Piece{
 
     /**
      * Evaluates the validity of the move based on the king piece's movement rules.
-     * validation is true when the king has moved 1 distance either vertically, horizontally or diagonally.
+     * validation is currently a work in progress.
      */
     public boolean validMove(int x, int y, int destX, int destY) {
         return ((destX == x + 1 && destY == y + 1) || 

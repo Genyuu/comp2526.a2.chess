@@ -17,10 +17,12 @@ import Pieces.*;
  * Appropriate to the event. </p>
  * <p>Game logic & rules are also mostly handled by the board.</p>
  * 
+ *
  * @author Chris Cho, A00972501, Set A
  * @version 3.0
  */
 
+//HELLO
 public class Board extends JPanel{
     // Dimension size of each tile.
     private int maxSize;
