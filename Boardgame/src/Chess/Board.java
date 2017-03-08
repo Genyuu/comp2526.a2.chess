@@ -128,6 +128,14 @@ public class Board extends JPanel{
     }
     
     /**
+     * 
+     * @return
+     */
+    public Tile[][] getTiles() {
+    	return tile;
+    }
+    
+    /**
      * Evaluates the click on a tile. 
      * <p>If the event source (srcTile) caught from the tileHandler 
      * actionListener matches up completely with one of the tiles on

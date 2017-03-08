@@ -1,0 +1,53 @@
+package Pieces;
+
+import javax.swing.Icon;
+import Chess.Tile;
+
+/**
+ * Chess piece super class. Serves as a prototype for all other pieces.
+ * 
+ * @author Chris Cho, A00972501, Set A
+ * @version 1.0
+ */
+public abstract class Piece {
+    /** This player's piece, cannot be altered after assignment. */
+    protected final int player;
+    /** 
+     * This piece's image icon.
+     */
+    protected Icon pieceIcon = null;
+    
+    /**
+     * Piece constructor. Assigns an owner to the piece.
+     * @param p the player this piece belongs to. 1 for player 1 or 2 for player 2
+     */
+    public Piece(int p) {
+        player = p;
+    }
+    
+    /**
+     * Returns the image icon specified by the piece type.
+     * @return the piece's icon image
+     */
+    public Icon getIcon() {
+        return pieceIcon;
+    }
+    
+    /**
+     * Returns the owner value of this piece.
+     * @return the player this piece belongs to. 1 for player 1 or 2 for player 2
+     */
+    public int getPlayer() {
+        return player;
+    }
+    
+    /**
+     * Evaluates the whether the piece's movement is a valid move or not.
+     * @param x initial x position of the piece
+     * @param y initial y position of the piece
+     * @param destX the destination x position of the piece
+     * @param destY the destination y position of the piece
+     * @return <b>true</b> if the move is valid depending on the piece; <b>false</b> otherwise.
+     */
+    public abstract boolean validMove(int x, int y, final Tile[][] tile);
+}

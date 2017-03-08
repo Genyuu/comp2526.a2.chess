@@ -1,6 +1,9 @@
 package Pieces;
 
+import java.awt.Point;
+
 import javax.swing.Icon;
+import Chess.Tile;
 
 /**
  * Chess piece super class. Serves as a prototype for all other pieces.
@@ -48,5 +51,7 @@ public abstract class Piece {
      * @param destY the destination y position of the piece
      * @return <b>true</b> if the move is valid depending on the piece; <b>false</b> otherwise.
      */
-    public abstract boolean validMove(int x, int y, int destX, int destY);
+    public abstract Point[] validMove(int x, int y, final Tile[][] tile);
+    
+    public abstract Point[] validMove(int x, int y, int destX, int destY, final Tile[][] tile);
 }
