@@ -1,7 +1,6 @@
 package Pieces;
 
 import java.awt.Point;
-
 import javax.swing.Icon;
 import Chess.Tile;
 
