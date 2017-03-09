@@ -2,6 +2,8 @@ package Pieces;
 
 import javax.swing.ImageIcon;
 
+import Chess.Tile;
+
 /**
  * Knight chess piece.
  * 
@@ -26,7 +28,7 @@ public class Knight extends Piece {
      * Evaluates the validity of the move based on the knight pieces movement rules.
      * The movement is valid when it moves 2 tiles forward a direction and 1 tile to the left or right from its direction.
      */
-    public boolean validMove(int x, int y, int destX, int destY) {
+    public boolean validMove(int x, int y, int destX, int destY, final Tile[][] t) {
         if ((destX == (x+2) && destY == (y+1))
             ||(destX == (x+2) && destY == (y-1))
             ||(destX == (x-2) && destY == (y+1))
