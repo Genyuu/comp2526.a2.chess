@@ -49,7 +49,7 @@ public class Engine extends JPanel {
         
         add(board, BorderLayout.CENTER);
         board.setPiece(new Bishop(1), 3, 3);
-        board.setPiece(new Rook(2), 5, 5);
+        board.setPiece(new Queen(2), 5, 5);
     }
     
     private void addMenu() {
