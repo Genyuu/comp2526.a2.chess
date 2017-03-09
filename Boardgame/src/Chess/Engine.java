@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import Pieces.Bishop;
+
 /**
  * Engine class creates and maintains the GUI component of the chess game.
  * 
@@ -46,7 +48,8 @@ public class Engine extends JPanel {
         board = new Board();
         
         add(board, BorderLayout.CENTER);
-        board.setBoard();
+        board.setPiece(new Bishop(1), 3, 3);
+        board.setPiece(new Bishop(2), 5, 5);
     }
     
     private void addMenu() {

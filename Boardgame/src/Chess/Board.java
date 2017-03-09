@@ -116,6 +116,11 @@ public class Board extends JPanel{
         tile[7][7].setPiece(new Rook(1));
     }
     
+    public void setPiece(Piece p, int x, int y) {
+        turn = 1;
+        tile[y][x].setPiece(p);
+    }
+    
     /**
      * Clears the board of all pieces.
      */
@@ -167,6 +172,7 @@ public class Board extends JPanel{
         return (!(tile[point.y][point.x].isEmpty()));
     }
     
+    // Checks if the move source and destination has pieces of the same player.
     private final boolean hasSamePlayer() {
     	return (tile[point.y][point.x].getPiece().getPlayer() ==
     			tile[pointActivated.y][pointActivated.x].getPiece().getPlayer());
@@ -174,6 +180,13 @@ public class Board extends JPanel{
     
     private final Boolean checkTurn() {
     	return (tile[point.y][point.x].piece.getPlayer() == turn);
+    }
+    
+    private final Boolean checkTurn(boolean on) {
+        if (on) {
+            return (tile[point.y][point.x].piece.getPlayer() == turn);
+        }
+        return true;
     }
     
     private final void changeTurn() {
@@ -209,11 +222,12 @@ public class Board extends JPanel{
      * @return true if valid; false otherwise.
      */
     private boolean scan() {
+        // Checking tile for friendly piece.
         if (hasPiece() && hasSamePlayer()) {
         	return false;
         } else {
             return tile[pointActivated.y][pointActivated.x]
-                   .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y);
+                   .piece.validMove(pointActivated.x, pointActivated.y, point.x, point.y, tile);
         }
     }
     
@@ -245,7 +259,7 @@ public class Board extends JPanel{
             
             if (isDeactive()) {
                 if (hasPiece()) {
-                    if (checkTurn()) {
+                    if (checkTurn(false)) {
                     	activate();
                     }
                 }
@@ -253,7 +267,7 @@ public class Board extends JPanel{
                 if (scan()) {
                     if (!hasPiece() || !hasSamePlayer()) {
                     	move();
-                    	changeTurn();
+                    	//changeTurn();
                     }
                 }
                 deactivate();

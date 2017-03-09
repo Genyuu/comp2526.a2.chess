@@ -51,7 +51,16 @@ public abstract class Piece {
      * @param destY the destination y position of the piece
      * @return <b>true</b> if the move is valid depending on the piece; <b>false</b> otherwise.
      */
-    public abstract Point[] validMove(int x, int y, final Tile[][] tile);
+    public boolean validMove(int x, int y, int destX, int destY) {
+        return false;
+    }
+
+    public boolean validMove(int x, int y, int destX, int destY, Tile[][] t) {
+        // TODO Auto-generated method stub
+        return false;
+    };
     
-    public abstract Point[] validMove(int x, int y, int destX, int destY, final Tile[][] tile);
+    //public boolean validMove(int x, int y, int destX, int destY, final Tile[][] t) {
+      //  return false;
+    //}
 }

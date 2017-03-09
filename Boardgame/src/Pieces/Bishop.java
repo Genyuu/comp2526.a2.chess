@@ -36,43 +36,57 @@ public class Bishop extends Piece{
      * The movement is only valid when the move distance of x and y are both the same.
      * Direction is irrelevant, only magnitude is considered.
      */
-    public boolean validMove(int x, int y, int destX, int destY) {
-        return ((Math.pow((destX - x),2)) == (Math.pow((destY - y), 2)));
-    }
-
-    public boolean valid(int x, int y, int destX, int destY, final Tile[][] t) {
-        boolean condition;
-        int topRightStop;
-        int topLeftStop;
-        int botRightStop;
-        int botLeftStop;
-        //front right
-        for (int i = (x+1), j = (y-1); i < 8 && j >= 0; i++, j--) {
-            if (!t[j][i].isEmpty()) {
-                
-                break;
+    public boolean validMove(int x, int y, int destX, int destY, final Tile[][] t) {
+        if (Math.abs(destX-x) == Math.abs(destY-y)) {
+            //top right
+            if (destX > x && destY < y) {
+                for (int i = x+1, j = y-1; i < destX; i++, j--) {
+                    //System.out.println(i + ", " + j);
+                    if (!t[j][i].isEmpty()) {
+                        //System.out.println("PIECE BLOCK: " + "[" + i + "," + j + "]\n");
+                        return false;
+                    }
+                }
+                //System.out.println("Completed Scan\n");
             }
-        }
-        
-        //front left
-        for (int i = (x-1), j = (y-1); i >= 0 && j >= 0; i--, j--) {
-            if (!t[j][i].isEmpty()) {
-                break;
+            
+            //top left
+            if (destX < x && destY < y) {
+                for (int i = x-1, j = y-1; i > destX; i--, j--) {
+                    //System.out.println(i + ", " + j);
+                    if (!t[j][i].isEmpty()) {
+                        //System.out.println("PIECE BLOCK: " + "[" + i + "," + j + "]\n");
+                        return false;
+                    }
+                }
+                //System.out.println("Completed Scan\n");
             }
-        }
-        
-        //back right
-        for (int i = (x+1), j = (y+1); i < 8 && j < 8; i++, j++) {
-            if (!t[j][i].isEmpty()) {
-                break;
+            
+            //bot right
+            if (destX > x && destY > y) {
+                for (int i = x+1, j = y+1; i < destX; i++, j++) {
+                    //System.out.println(i + ", " + j);
+                    if (!t[j][i].isEmpty()) {
+                        //System.out.println("PIECE BLOCK: " + "[" + i + "," + j + "]\n");
+                        return false;
+                    }
+                }
+                //System.out.println("Completed Scan\n");
             }
-        }
-        
-        //back left
-        for (int i = (x-1), j = (y-1); i >= 0 && j < 8; i--, j++) {
-            if (!t[j][i].isEmpty()) {
-                break;
+            
+            //bot left
+            if (destX < x && destY > y) {
+                for (int i = x-1, j = y+1; i >= destX; i--, j++) {
+                    //System.out.println(i + ", " + j);
+                    if (!t[j][i].isEmpty()) {
+                        //System.out.println("PIECE BLOCK: " + "[" + i + "," + j + "]\n");
+                        return false;
+                    }
+                }
+                //System.out.println("Completed Scan\n");
             }
+            return true;
         }
+        return false;
     }
 }
