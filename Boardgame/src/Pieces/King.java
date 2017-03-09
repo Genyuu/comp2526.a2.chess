@@ -1,6 +1,7 @@
 package Pieces;
 
 import javax.swing.ImageIcon;
+import Chess.Tile;
 
 /**
  * King chess piece.
@@ -26,7 +27,7 @@ public class King extends Piece{
      * Evaluates the validity of the move based on the king piece's movement rules.
      * validation is true when the king has moved 1 distance either vertically, horizontally or diagonally.
      */
-    public boolean validMove(int x, int y, int destX, int destY) {
+    public boolean validMove(int x, int y, int destX, int destY, final Tile[][] t) {
         return ((destX == x + 1 && destY == y + 1) || 
                 (destX == x - 1 && destY == y - 1) ||
                 (destX == x + 1 && destY == y - 1) ||

@@ -2,6 +2,8 @@ package Pieces;
 
 import javax.swing.ImageIcon;
 
+import Chess.Tile;
+
 /**
  * Pawn chess piece.
  * @author Chris Cho, A00972501, Set A
@@ -30,18 +32,32 @@ public class Pawn extends Piece{
      * <p>If the piece is at its initial position, the pawn is permitted to advance 2 tiles forward.
      * Otherwise it can only go 1 tile forwards.</p>
      */
-    public boolean validMove(int x, int y, int destX, int destY) {
+    public boolean validMove(int x, int y, int destX, int destY, final Tile[][] t) {
         if (player == 1) {
             if (y == 6) {
-                return (destX == x && (destY == y-1 || destY == y-2));
+                // Returns true if there is a piece diagonal to this one
+                if ((destX == x+1 || destX == x-1) && destY == y-2 && !t[destY][destX].isEmpty()) {
+                    return true;
+                }
+                return (destX == x && (destY == y-1 || destY == y-2) && t[destY+1][destX].isEmpty());
             }
-            return (destX == x && destY == y-1);
+            if ((destX == x+1 || destX == x-1) && destY == y-1 && !t[destY][destX].isEmpty()) {
+                return true;
+            }
+            return (destX == x && destY == y-1 && t[destY][destX].isEmpty());
 
         } else {
             if (y == 1) {
-                return (destX == x && (destY == y+1 || destY == y+2));
+                // Returns true if there is a piece diagonal to this one
+                if ((destX == x+1 || destX == x-1) && destY == y+2 && !t[destY][destX].isEmpty()) {
+                    return true;
+                }
+                return (destX == x && (destY == y+1 || destY == y+2) && t[destY-1][destX].isEmpty());
             }
-            return (destX == x && destY == y+1);
+            if ((destX == x+1 || destX == x-1) && destY == y+1 && !t[destY][destX].isEmpty()) {
+                return true;
+            }
+            return (destX == x && destY == y+1 && t[destY][destX].isEmpty());
         }
     }
 
