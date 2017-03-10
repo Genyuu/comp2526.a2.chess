@@ -30,21 +30,17 @@ public class Rook extends Piece{
      */
     public boolean validMove(int x, int y, int destX, int destY, final Tile[][] t) {
         if (!(destX != x && destY != y)) {
-            System.out.println("Starting scan");
             //top
             if (destY < y) {
-                System.out.println("Destination exists above this");
                 for (int i = x, j = y-1; j > destY; j--) {
                     System.out.println(i + "," + j);
                     if (!t[j][i].isEmpty())
                         return false;
                 }
-                System.out.println("\n");
             }
             
             //right
             if (destX > x) {
-                System.out.println("Destination exists right of this");
                 for (int i = x+1, j = y; i < destX; i++) {
                     if (!t[j][i].isEmpty())
                         return false;
@@ -53,7 +49,6 @@ public class Rook extends Piece{
             
             //bot
             if (destY > y) {
-                System.out.println("Destination exists below this");
                 for (int i = x,j = y+1; j < destY; j++) {
                     if (!t[j][i].isEmpty())
                         return false;
@@ -62,7 +57,6 @@ public class Rook extends Piece{
             
             //left
             if (destX < x) {
-                System.out.println("Destination exists left of this");
                 for (int i = x-1, j = y; i > destX; i--) {
                     if (!t[j][i].isEmpty())
                         return false;

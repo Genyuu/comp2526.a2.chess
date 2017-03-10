@@ -1,7 +1,6 @@
 package Chess;
 
 import javax.swing.JFrame;
-
 /**
  * Main class creates and drives the chess program.
  * 
@@ -10,14 +9,7 @@ import javax.swing.JFrame;
  */
 public class Main {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Chess");
+        JFrame frame = new chessEngine("Chess");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        frame.getContentPane().add(new Engine());
-        frame.pack();
-        frame.setSize(800,850);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 }

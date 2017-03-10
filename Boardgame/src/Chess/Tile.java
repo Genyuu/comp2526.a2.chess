@@ -15,7 +15,7 @@ import Pieces.Piece;
  * @author Chris Cho, A00972501, Set A
  * @version 1.0
  */
-public class Tile extends JButton{
+public class Tile extends JButton implements java.io.Serializable {
     /**
      * the piece this tile controls. Is null when empty.
      */

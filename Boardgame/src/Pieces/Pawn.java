@@ -36,27 +36,37 @@ public class Pawn extends Piece{
         if (player == 1) {
             if (y == 6) {
                 // Returns true if there is a piece diagonal to this one
-                if ((destX == x+1 || destX == x-1) && destY == y-2 && !t[destY][destX].isEmpty()) {
+                if ((destX == x+1 || destX == x-1) && (destY == y-2 || destY == y-1) && !t[destY][destX].isEmpty()) {
                     return true;
                 }
-                return (destX == x && (destY == y-1 || destY == y-2) && t[destY+1][destX].isEmpty());
+                if (destX == x && destY == y-2) {
+                    return (t[destY][destX].isEmpty() && t[destY+1][destX].isEmpty());
+                }
+                return (destX == x && destY == y-1 && t[destY][destX].isEmpty());
             }
+            
             if ((destX == x+1 || destX == x-1) && destY == y-1 && !t[destY][destX].isEmpty()) {
                 return true;
             }
+            
             return (destX == x && destY == y-1 && t[destY][destX].isEmpty());
 
         } else {
             if (y == 1) {
                 // Returns true if there is a piece diagonal to this one
-                if ((destX == x+1 || destX == x-1) && destY == y+2 && !t[destY][destX].isEmpty()) {
+                if ((destX == x+1 || destX == x-1) && (destY == y+2 || destY == y+1) && !t[destY][destX].isEmpty()) {
                     return true;
                 }
-                return (destX == x && (destY == y+1 || destY == y+2) && t[destY-1][destX].isEmpty());
+                if (destX == x && destY == y+2) {
+                    return (t[destY][destX].isEmpty() && t[destY-1][destX].isEmpty());
+                }
+                return (destX == x && destY == y+1 && t[destY][destX].isEmpty());
             }
+            
             if ((destX == x+1 || destX == x-1) && destY == y+1 && !t[destY][destX].isEmpty()) {
                 return true;
             }
+            
             return (destX == x && destY == y+1 && t[destY][destX].isEmpty());
         }
     }

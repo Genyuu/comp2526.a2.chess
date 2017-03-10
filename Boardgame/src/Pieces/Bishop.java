@@ -76,7 +76,7 @@ public class Bishop extends Piece{
             
             //bot left
             if (destX < x && destY > y) {
-                for (int i = x-1, j = y+1; i >= destX; i--, j++) {
+                for (int i = x-1, j = y+1; i > destX; i--, j++) {
                     //System.out.println(i + ", " + j);
                     if (!t[j][i].isEmpty()) {
                         //System.out.println("PIECE BLOCK: " + "[" + i + "," + j + "]\n");

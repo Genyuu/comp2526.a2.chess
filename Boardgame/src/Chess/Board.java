@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
+
 import javax.swing.JPanel;
 import Pieces.*;
 
@@ -21,7 +23,12 @@ import Pieces.*;
  * @version 3.0
  */
 
-public class Board extends JPanel{
+public class Board extends JPanel implements java.io.Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     // Dimension size of each tile.
     private int maxSize;
     
@@ -49,6 +56,10 @@ public class Board extends JPanel{
     // Location value of the activated tile.
     private Point pointActivated;
     
+    private Piece[][] piece;
+    
+    private tileHandler tileListener;
+    
     /**
      * Board constructor.
      * <p>This is the zero-parameter version. It...
@@ -68,6 +79,8 @@ public class Board extends JPanel{
         color2 = Color.GRAY;
         pointActivated = new Point(-1,-1);
         
+        tileListener = new tileHandler();
+        
         setLayout(new GridLayout(gridSize,gridSize));
 
         generateTiles(gridSize, color1, color2);
@@ -83,9 +96,27 @@ public class Board extends JPanel{
                     tile[y][x] = new Tile(c2, size);
                 }
                 this.add(tile[y][x]);
-                tile[y][x].addActionListener(new tileHandler());
+                tile[y][x].addActionListener(tileListener);
             }
         }
+    }
+    
+    public final void initPieces() {
+        piece = new Piece[2][6];
+        
+        piece[0][0] = new King(1);
+        piece[0][1] = new Queen(1);
+        piece[0][2] = new Bishop(1);
+        piece[0][3] = new Knight(1);
+        piece[0][4] = new Rook(1);
+        piece[0][5] = new Pawn(1);
+        
+        piece[1][0] = new King(2);
+        piece[1][1] = new Queen(2);
+        piece[1][2] = new Bishop(2);
+        piece[1][3] = new Knight(2);
+        piece[1][4] = new Rook(2);
+        piece[1][5] = new Pawn(2);
     }
     
     /**
@@ -114,6 +145,33 @@ public class Board extends JPanel{
         tile[7][5].setPiece(new Bishop(1));
         tile[7][6].setPiece(new Knight(1));
         tile[7][7].setPiece(new Rook(1));
+    }
+    
+    public final void initBoard() {
+        turn = 1;
+        // Pawns
+        for (int i = 0; i < 8; i++) {
+            tile[1][i].setPiece(piece[1][5]);
+            tile[6][i].setPiece(piece[0][5]);
+        }
+        
+        tile[0][0].setPiece(piece[1][4]);
+        tile[0][1].setPiece(piece[1][3]);
+        tile[0][2].setPiece(piece[1][2]);
+        tile[0][3].setPiece(piece[1][1]);
+        tile[0][4].setPiece(piece[1][0]);
+        tile[0][5].setPiece(piece[1][2]);
+        tile[0][6].setPiece(piece[1][3]);
+        tile[0][7].setPiece(piece[1][4]);
+        
+        tile[7][0].setPiece(piece[0][4]);
+        tile[7][1].setPiece(piece[0][3]);
+        tile[7][2].setPiece(piece[0][2]);
+        tile[7][3].setPiece(piece[0][1]);
+        tile[7][4].setPiece(piece[0][0]);
+        tile[7][5].setPiece(piece[0][2]);
+        tile[7][6].setPiece(piece[0][3]);
+        tile[7][7].setPiece(piece[0][4]);
     }
     
     public void setPiece(Piece p, int x, int y) {
@@ -189,8 +247,8 @@ public class Board extends JPanel{
         return true;
     }
     
-    private final void changeTurn() {
-    	if (turn == 1) {
+    private final void changeTurn(boolean on) {
+    	if (on && turn == 1) {
     		turn = 2;
     	} else {
     		turn = 1;
@@ -236,7 +294,12 @@ public class Board extends JPanel{
      * @author Chris Cho, A00972501, Set A
      * @version 3.0
      */
-    public class tileHandler implements ActionListener {
+    public class tileHandler implements ActionListener, Serializable {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+
         /**
          * Evaluation of the piece click, activation, movement and de-activation.
          * 
@@ -259,7 +322,7 @@ public class Board extends JPanel{
             
             if (isDeactive()) {
                 if (hasPiece()) {
-                    if (checkTurn(false)) {
+                    if (checkTurn(true)) {
                     	activate();
                     }
                 }
@@ -267,7 +330,7 @@ public class Board extends JPanel{
                 if (scan()) {
                     if (!hasPiece() || !hasSamePlayer()) {
                     	move();
-                    	//changeTurn();
+                    	changeTurn(true);
                     }
                 }
                 deactivate();

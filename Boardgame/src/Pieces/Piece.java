@@ -1,6 +1,5 @@
 package Pieces;
 
-import java.awt.Point;
 import javax.swing.Icon;
 import Chess.Tile;
 
@@ -10,7 +9,7 @@ import Chess.Tile;
  * @author Chris Cho, A00972501, Set A
  * @version 1.0
  */
-public abstract class Piece {
+public abstract class Piece implements java.io.Serializable {
     /** This player's piece, cannot be altered after assignment. */
     protected final int player;
     /** 

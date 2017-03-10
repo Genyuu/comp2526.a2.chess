@@ -1,0 +1,131 @@
+package Chess;
+
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+import Pieces.*;
+
+public class chessEngine extends JFrame{
+    private Board board;
+    private JMenuBar menu;
+    private JMenuItem newMenuItem;
+    private JMenuItem saveMenuItem;
+    private JMenuItem clearMenuItem;
+    private JMenuItem loadMenuItem;
+    private MenuHandler menuListener;
+    
+    private Piece[][] piece;
+    
+    public chessEngine(String title) {
+        super(title);
+        
+        menuListener = new MenuHandler();
+        initMenu();
+        
+        this.pack();
+        this.setSize(800,850);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        
+        board = new Board();
+        this.add(board);
+    }
+    
+    private final void initMenu() {
+        menu = new JMenuBar();
+        menu.setSize(new Dimension(800, 50));
+        
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        menu.add(fileMenu);
+        
+        newMenuItem = new JMenuItem("New", KeyEvent.VK_N);
+        newMenuItem.addActionListener(menuListener);
+        fileMenu.add(newMenuItem);
+        
+        saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);
+        saveMenuItem.addActionListener(menuListener);
+        fileMenu.add(saveMenuItem);
+        
+        clearMenuItem = new JMenuItem("Clear", KeyEvent.VK_C);
+        clearMenuItem.addActionListener(menuListener);
+        fileMenu.add(clearMenuItem);
+        
+        loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L);
+        loadMenuItem.addActionListener(menuListener);
+        fileMenu.add(loadMenuItem);
+        
+        this.setJMenuBar(menu);
+    }
+
+    public final void save() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("tmp\\chess.gam");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(board);
+            out.close();
+            fileOut.close();
+            System.out.printf("Serialized data is saved in tmp\\chess.gam\n");
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+    
+    public final void load() {
+        this.remove(board);
+        board = null;
+        try {
+            FileInputStream fileIn = new FileInputStream("tmp\\chess.gam");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            board = (Board) in.readObject();
+            in.close();
+            fileIn.close();
+        }catch(IOException i) {
+            i.printStackTrace();
+            return;
+        }catch(ClassNotFoundException c) {
+            System.out.println("Board class not found");
+            c.printStackTrace();
+            return;
+        }
+        
+        this.add(board);
+        this.repaint();
+    }
+    
+    public class MenuHandler implements ActionListener {
+        
+        public void actionPerformed(ActionEvent e) {
+            if ("New".equals(e.getActionCommand())) {
+                board.clearBoard();
+                board.initPieces();
+                board.initBoard();
+            }
+            
+            if ("Save".equals(e.getActionCommand())) {
+                save();
+            }
+            
+            if ("Clear".equals(e.getActionCommand())) {
+                board.clearBoard();
+            }
+            
+            if ("Load".equals(e.getActionCommand())) {
+                load();
+            }
+        }
+    }
+}
