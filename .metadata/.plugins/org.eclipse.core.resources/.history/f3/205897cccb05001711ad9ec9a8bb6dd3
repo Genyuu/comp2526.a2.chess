@@ -103,10 +103,7 @@ public class Board extends JPanel implements java.io.Serializable{
         }
     }
     
-    /**
-     * Creates all possible chess pieces needed for a chess game.
-     * Includes 1 of each piece for 2 players.
-     */
+    // Creates and initializes
     public final void initPieces() {
         piece = new Piece[2][6];
         
@@ -126,8 +123,33 @@ public class Board extends JPanel implements java.io.Serializable{
     }
     
     /**
-     * Assigns all necessary chess pieces to their initial positions of a chess game.
+     * Sets-up the pieces with the default chess game set-up.
      */
+    public void setBoard() { 
+    	turn = 1;
+        for (int x = 0; x < 8; x++) {
+            tile[1][x].setPiece(new Pawn(2));
+            tile[6][x].setPiece(new Pawn(1));
+        }
+        tile[0][0].setPiece(new Rook(2));
+        tile[0][1].setPiece(new Knight(2));
+        tile[0][2].setPiece(new Bishop(2));
+        tile[0][3].setPiece(new Queen(2));
+        tile[0][4].setPiece(new King(2));
+        tile[0][5].setPiece(new Bishop(2));
+        tile[0][6].setPiece(new Knight(2));
+        tile[0][7].setPiece(new Rook(2));
+        
+        tile[7][0].setPiece(new Rook(1));
+        tile[7][1].setPiece(new Knight(1));
+        tile[7][2].setPiece(new Bishop(1));
+        tile[7][3].setPiece(new Queen(1));
+        tile[7][4].setPiece(new King(1));
+        tile[7][5].setPiece(new Bishop(1));
+        tile[7][6].setPiece(new Knight(1));
+        tile[7][7].setPiece(new Rook(1));
+    }
+    
     public final void initBoard() {
         turn = 1;
         // Pawns
@@ -217,16 +239,10 @@ public class Board extends JPanel implements java.io.Serializable{
     			tile[pointActivated.y][pointActivated.x].getPiece().getPlayer());
     }
     
-    // 
     private final Boolean checkTurn() {
     	return (tile[point.y][point.x].piece.getPlayer() == turn);
     }
     
-    /**
-     * Checks the current player turn if the enable condition is on
-     * @param on enable condition for checking the turn, will check turns if true
-     * @return true when the clicked piece belongs to the player on his turn.
-     */
     private final Boolean checkTurn(boolean on) {
         if (on) {
             return (tile[point.y][point.x].piece.getPlayer() == turn);
@@ -234,11 +250,6 @@ public class Board extends JPanel implements java.io.Serializable{
         return true;
     }
     
-    /** 
-     * Changes the turn if the enable condition
-     * @param on enable condition for changing turns, will not change turns if it is not on
-     * 
-     */
     private final void changeTurn(boolean on) {
     	if (on && turn == 1) {
     		turn = 2;
@@ -267,7 +278,8 @@ public class Board extends JPanel implements java.io.Serializable{
     }
     
     /**
-     * Evaluates whether the 
+     * Placeholder for a more advanced method later on.
+     * At the moment, evaluates the validity of the piece's movement.
      * @return true if valid; false otherwise.
      */
     private boolean validateMove() {
@@ -318,7 +330,7 @@ public class Board extends JPanel implements java.io.Serializable{
                     }
                 }
             } else {
-                if (validateMove()) {
+                if (scan()) {
                     if (!hasPiece() || !hasSamePlayer()) {
                     	move();
                     	changeTurn(true);
