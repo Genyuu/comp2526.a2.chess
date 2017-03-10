@@ -17,13 +17,7 @@ import javax.swing.JMenuItem;
 
 import Pieces.*;
 
-/**
- * JFrame object for a chess game GUI.
- * 
- * @author Chris Cho, A00972501, Set A
- *
- */
-public class ChessEngine extends JFrame{
+public class chessEngine extends JFrame{
     private Board board;
     private JMenuBar menu;
     private JMenuItem newMenuItem;
@@ -36,46 +30,28 @@ public class ChessEngine extends JFrame{
     
     /**
      * Constructor for the chess Engine class.
-     * Sets the frame settings, creates and adds a new board to it.
-     * Initializes the board pieces and sets them up on the board.
-     * 
-     * @param title window frame title
+     * Sets the necessary frame settings, creates and adds a new board
+     * @param title
      */
-    public ChessEngine(String title) {
-        // Super class constructor call
+    public chessEngine(String title) {
         super(title);
         
-        // Creates the menu bar listener
         menuListener = new MenuHandler();
-        
         initMenu();
         
-        // frame settings 
         this.pack();
         this.setSize(800,850);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         
-        // Creates and adds 
         board = new Board();
         this.add(board);
         
-        // Initializes the board with pieces for a game
         board.initPieces();
         board.initBoard();
     }
     
-    /**
-     * Creates and adds the menu bar and its items.
-     * file-menu:
-     * <ul>
-     *     <li>"New" menu-item</li>
-     *     <li>"Save" menu-item</li>
-     *     <li>"Clear" menu-item</li>
-     *     <li>"Load" menu-item</li>
-     * </ul>
-     */
     private final void initMenu() {
         menu = new JMenuBar();
         menu.setSize(new Dimension(800, 50));
@@ -103,9 +79,6 @@ public class ChessEngine extends JFrame{
         this.setJMenuBar(menu);
     }
 
-    /**
-     *  Macro for saving the current board instance with Serializable.
-     */
     public final void save() {
         try {
             FileOutputStream fileOut = new FileOutputStream("tmp\\chess.gam");
@@ -119,9 +92,6 @@ public class ChessEngine extends JFrame{
         }
     }
     
-    /**
-     *  Macro for loading the current board instance with Serializable.
-     */
     public final void load() {
         this.remove(board);
         board = null;
@@ -144,39 +114,23 @@ public class ChessEngine extends JFrame{
         this.repaint();
     }
     
-    /**
-     * Listens and handles menubar events.
-     * @author Chris Cho, A00972501, Set A
-     */
     public class MenuHandler implements ActionListener {
-        /**
-         * Action listener, evaluates the event of all JMenu events.
-         * <ul>
-         * <li>"New" Menu-item: this first clears the board and then reassembles the board with pieces in their original positions.</li>
-         * <li>"Save" Menu-item: this saves a serialized instance of the board as "chess.gam" in the "\tmp" folder.</li>
-         * <li>"Clear" Menu-item: this clears the board of all pieces.</li>
-         * <li>"Load" Menu-item: this loads a serialized instance of the board identified as "chess.gam" from "\tmp" folder.</li>
-         * </ul>
-         */
+        
         public void actionPerformed(ActionEvent e) {
-            // Resets the board
             if ("New".equals(e.getActionCommand())) {
                 board.clearBoard();
                 board.initPieces();
                 board.initBoard();
             }
             
-            // Save the current board state from "\tmp\chess.gem"
             if ("Save".equals(e.getActionCommand())) {
                 save();
             }
             
-            // Clear the board
             if ("Clear".equals(e.getActionCommand())) {
                 board.clearBoard();
             }
             
-            // Load the previously saved board state from "\tmp\chess.gam"
             if ("Load".equals(e.getActionCommand())) {
                 load();
             }
